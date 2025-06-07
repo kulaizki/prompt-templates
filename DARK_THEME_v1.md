@@ -4,11 +4,11 @@
 
 **Objective:** Build a responsive, modern landing page for a SaaS product using a **sleek, premium dark theme**.
 **Core Principles:**
-- **Technology Stack:** SvelteKit, Svelte 5, Tailwind CSS.
-- **Design:** Elegant, modern aesthetic with a dark base background.
+- **Technology Stack:** SvelteKit, Svelte 5, Tailwind CSS, `svelte-inview`.
+- **Design:** Elegant, modern, and fully mobile-responsive aesthetic with a dark base background.
 - **Layout:** Immersive, full-screen sections (`min-h-screen`).
 - **Theme:** A consistent color scheme using dark grays or blues (e.g., `bg-gray-950`) and a vibrant, dynamic `[PrimaryColor]` (e.g., cyan, lime, rose).
-- **Animation:** Subtle on-scroll fades and an animated separator.
+- **Animation:** Subtle on-scroll fades for all sections (triggered using `svelte-inview`) and an animated separator.
 
 ## 2. Global Styles & Configuration
 - **Tailwind:** Configure `tailwind.config.js` to include the dynamic `[PrimaryColor]` palette.
@@ -17,7 +17,7 @@
 ## 3. Page Structure & Components
 
 - **`Header.svelte`**:
-  - **Layout:** Sticky, with a blurred background that's slightly lighter than the page (e.g., `bg-gray-900/80`) to create depth. Accented with a `border-b-2 border-[PrimaryColor]-500`.
+  - **Layout:** Sticky, with a blurred background that's slightly lighter than the page (e.g., `bg-gray-900/80`) to create depth. Accented with a `border-b-2 border-[PrimaryColor]-500`. Includes a hamburger menu for mobile.
   - **Navigation:** Text is a light gray (e.g., `text-gray-200`), with a `hover:text-[PrimaryColor]-400` effect.
 
 - **`Hero.svelte`**:
