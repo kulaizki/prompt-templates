@@ -6,8 +6,8 @@ These templates are designed to be used with AI-powered code generation tools to
 
 ## Available Prompts
 
-- [Dark Theme](./DARK_THEME_v1.md)
-- [Light Theme](./LIGHT_THEME_v1.md)
+- [Dark Theme](./prompts/DARK_THEME_v1.md)
+- [Light Theme](./prompts/LIGHT_THEME_v1.md)
 
 ## License
 
