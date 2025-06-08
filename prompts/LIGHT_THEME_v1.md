@@ -1,51 +1,166 @@
 # Prompt Template: Modern SaaS Landing Page (Light Theme)
 
-## 1. Project Overview
+This template provides a comprehensive blueprint for creating a responsive, animated, and professional SaaS landing page with a **light and airy theme**.
 
-**Objective:** Build a responsive, modern landing page for a SaaS product using a **light and airy theme**.
-**Core Principles:**
-- **Technology Stack:** SvelteKit, Svelte 5, Tailwind CSS, `svelte-inview`.
-- **Design:** Clean, spacious, professional, and fully mobile-responsive aesthetic with a light base background.
-- **Layout:** Immersive, full-screen sections (`min-h-screen`) for a step-by-step scrolling experience.
-- **Theme:** A consistent color scheme using `white`, light grays, and a dynamic `[PrimaryColor]` (e.g., sky, green, indigo).
-- **Animation:** Subtle on-scroll fades for all sections (triggered using `svelte-inview`) and an animated separator.
+## 1. Project Initialization & Structure
 
-## 2. Global Styles & Configuration
-- **Tailwind:** Configure `tailwind.config.js` to include the dynamic `[PrimaryColor]` palette.
-- **Backgrounds:** Alternate section backgrounds between `bg-white` and a very light tint of the primary color (e.g., `bg-[PrimaryColor]-50`).
+### 1.1. Dependencies
+Ensure the following dependencies are installed in your SvelteKit project:
+- `tailwindcss`
+- `svelte-inview`: For triggering animations on scroll.
+- `autoprefixer`, `postcss`
 
-## 3. Page Structure & Components
+```json
+"devDependencies": {
+  "tailwindcss": "^3.4.1",
+  "svelte-inview": "^4.0.2",
+  // ... other SvelteKit dependencies
+}
+```
 
-- **`Header.svelte`**:
-  - **Layout:** Sticky, with a blurred, semi-transparent dark background (e.g., `bg-gray-950/90`) for contrast against the light page. Accented with a `border-b-2 border-[PrimaryColor]-600`. Includes a hamburger menu for mobile.
-  - **Navigation:** Text is `text-white`, with a `hover:text-[PrimaryColor]-400` effect.
+### 1.2. Folder Structure
+Organize your project with a component-based architecture.
 
-- **`Hero.svelte`**:
-  - **Layout:** Full-screen on a `bg-white` base.
-  - **Background:** Can feature a subtle, light background image with a strong semi-transparent white overlay (`bg-white/80`) to ensure text readability.
-  - **Headline:** Use a gradient text effect from a darker gray to the `[PrimaryColor]`.
+```
+/src
+├── /lib
+│   └── /components
+│       ├── Header.svelte
+│       ├── Footer.svelte
+│       ├── SEO.svelte
+│       ├── Hero.svelte
+│       ├── Features.svelte
+│       ├── HowItWorks.svelte
+│       ├── Benefits.svelte
+│       ├── Pricing.svelte
+│       ├── CTA.svelte
+│       └── BackToTop.svelte
+├── /routes
+│   ├── +layout.svelte
+│   └── +page.svelte
+└── app.css
+```
 
-- **`ProblemSolution.svelte`**:
-  - **Layout:** Full-screen, two-column layout on an alternating background (e.g., `bg-[PrimaryColor]-50`).
-  - **Content:**
-    - **Left Column (The Problem):** A headline stating a relatable problem (e.g., "Struggling with Compliance?") followed by text detailing the user's pain points.
-    - **Right Column (The Solution):** A headline presenting the solution (e.g., "The Simple Path to Privacy"), followed by text explaining how the product resolves those specific pain points.
+## 2. Global Configuration & Layout
 
-- **`AnimatedBorder.svelte`**:
-  - **Styling:** The animated line and circle should use the `[PrimaryColor]` (e.g., `text-[PrimaryColor]-500` and `text-[PrimaryColor]-400`).
+### 2.1. Tailwind Configuration (`tailwind.config.js`)
+Set up a dynamic theme using a placeholder `[PrimaryColor]` (e.g., `sky`, `indigo`, `teal`).
 
-- **`Features.svelte`**:
-   - **Layout:** Full-screen, centered content on an alternating background (e.g., `bg-white`).
-   - **Content:** A main headline, a descriptive sub-headline, and a 3-column grid of feature cards. Each card has an icon, title, and description.
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{html,js,svelte,ts}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: { // Example using 'sky'
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          // ... add all shades 50 through 950
+          950: '#082f49',
+        }
+      },
+    },
+  },
+  plugins: [],
+};
+```
 
-- **`HowItWorks.svelte`**:
-  - **Card Accent:** Use a colored top-border accent: `border-t-4 border-[PrimaryColor]-400`.
+### 2.2. Root Layout (`src/routes/+layout.svelte`)
+This file wraps every page, ensuring consistent layout and including global components.
 
-- **`CTA.svelte`**:
-  - **Background:** Can use a subtle gradient from a light gray to a light tint of the `[PrimaryColor]`.
+```svelte
+<script lang="ts">
+  import '../app.css';
+  import Header from '$lib/components/Header.svelte';
+  import Footer from '$lib/components/Footer.svelte';
+  import SEO from '$lib/components/SEO.svelte';
+</script>
 
-- **`Footer.svelte`**:
-  - **Layout:** A multi-column layout on a dark background based on the primary color (e.g., `bg-[PrimaryColor]-900`).
-  - **Text:** Use a light, contrasting color (e.g., `text-[PrimaryColor]-100` or `text-white`).
+<SEO />
 
-*(Other components like `Features`, `Benefits`, `Pricing`, and `SEO` should follow the same structural principles, adapting their specific styles based on the sections above.)* 
+<div class="flex flex-col min-h-screen bg-white">
+  <Header />
+  <main class="flex-1">
+    <slot />
+  </main>
+  <Footer />
+</div>
+```
+
+### 2.3. SEO Component (`src/lib/components/SEO.svelte`)
+Centralize metadata management for better search engine optimization.
+
+```svelte
+<script lang="ts">
+  // Props for dynamic metadata
+  export let title = 'ConsentPro - Simplified Data Privacy Compliance';
+  export let description = 'A default description for your awesome SaaS product.';
+</script>
+
+<svelte:head>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <!-- Add other tags like Open Graph, Twitter Cards, etc. -->
+</svelte:head>
+```
+
+## 3. Core Component Implementation
+
+### 3.1. `Header.svelte`
+- **Objective:** Provide clear, persistent navigation.
+- **Styling:**
+  - A sticky header with a light, blurred background: `sticky top-0 z-50 bg-white/80 backdrop-blur-md`.
+  - A subtle bottom border: `border-b border-gray-200`.
+  - Navigation links should be dark: `text-gray-700`, with a hover effect: `hover:text-primary-600`.
+  - The primary CTA button should be prominent: `bg-primary-600 text-white hover:bg-primary-700`.
+- **Functionality:**
+  - Implement a `smoothScroll` function to handle anchor links (`/#features`). This function should navigate to the homepage if the user is on another page, then scroll.
+  - The logo should link to `/` and use `smoothScroll` to scroll to the top of the page.
+  - A hamburger menu for mobile that toggles a full-width dropdown.
+
+### 3.2. `Footer.svelte`
+- **Objective:** Provide secondary navigation, legal links, and company information.
+- **Styling:**
+  - A dark, contrasting background: `bg-gray-800`.
+  - Text should be light: `text-gray-300`, with `text-white` for headings.
+  - Links have a subtle hover effect: `hover:text-white`.
+- **Functionality:**
+  - Re-use the `smoothScroll` function for any anchor links.
+
+### 3.3. Section Components (`Features`, `Benefits`, `HowItWorks`, etc.)
+- **Objective:** Showcase product information in visually distinct, full-screen sections.
+- **Layout:**
+  - Each component should have a root `<section>` with `min-h-screen` and `flex items-center justify-center` for vertical centering.
+  - Alternate section backgrounds for visual separation: `bg-white` and `bg-primary-50` (or `bg-gray-50`).
+- **Animation:**
+  - Use `svelte-inview` on the main section container.
+  - When the section enters the viewport (`on:inview_change`), trigger fade-in and slide-up animations on child elements (headings, cards, etc.).
+  - Apply staggered delays to list items or grid elements for a sequential animation effect.
+  - **Example:** `class="transition-all duration-700 {isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}" style="transition-delay: {i * 150}ms"`.
+- **Styling Details:**
+  - **Headings:** Use a dark, bold font: `text-4xl font-bold text-gray-900`.
+  - **Subheadings:** Lighter text: `text-lg text-gray-600`.
+  - **Cards:** Use `bg-white`, `rounded-lg`, `shadow-lg`, and a subtle `border border-gray-200`. On hover, increase the shadow and add a slight lift: `hover:-translate-y-1`.
+
+### 3.4. `Pricing.svelte`
+- **Objective:** Clearly present pricing tiers.
+- **Styling:**
+  - Highlight the "Most Popular" plan.
+  - Use a border: `border-2 border-primary-500`.
+  - Add a "badge": `absolute top-0 -translate-y-1/2 ... bg-primary-500 text-white`.
+  - Make this plan physically larger or have a stronger shadow to draw attention.
+
+### 3.5. `BackToTop.svelte`
+- **Objective:** Improve navigation on long pages.
+- **Functionality:**
+  - Use `svelte:window on:scroll` to track scroll position.
+  - Show the button only when the user has scrolled past a certain point (e.g., `window.innerHeight / 2`).
+  - Use a Svelte transition (`fly` or `fade`) for smooth appearance/disappearance.
+  - On click, use `window.scrollTo({ top: 0, behavior: 'smooth' })`.
+- **Styling:**
+  - A floating button with `fixed bottom-6 right-6`.
+  - Circular shape (`rounded-full`) with an icon.
+  - Use the primary color for the background: `bg-primary-500 hover:bg-primary-600`.
+
+This detailed prompt ensures the generated landing page is modern, consistent, and adheres to best practices for UX and design. 
